@@ -22,4 +22,11 @@ class SerieController(private val service: SerieService) {
     fun getSeries(): HttpResponse<List<Serie?>>{
         return HttpResponse.ok(HttpStatus.CREATED).body(this.service.getAll())
     }
+
+    @Get("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun getSerieById(@PathVariable id:Long): HttpResponse<Serie>{
+        return HttpResponse.ok(HttpStatus.CREATED).body(this.service.getById(id))
+    }
 }
