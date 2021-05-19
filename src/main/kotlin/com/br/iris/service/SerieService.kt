@@ -9,5 +9,5 @@ interface SerieService {
     fun getAll(): List<Serie>
     fun getById(id: Long): Serie?
     fun delete(id: Long)
-    fun update(id: Long): Serie
+    fun update(id: Long, serie: Serie): Serie
 }
