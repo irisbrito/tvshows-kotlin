@@ -2,6 +2,7 @@ package com.br.iris.service
 
 import com.br.iris.entity.Serie
 import com.br.iris.repository.SerieRepository
+import java.lang.Exception
 import javax.inject.Inject
 
 class SerieServiceImpl @Inject constructor(private var serieRepository: SerieRepository)
@@ -16,7 +17,13 @@ class SerieServiceImpl @Inject constructor(private var serieRepository: SerieRep
     }
 
     override fun getById(id: Long): Serie? {
-        TODO("Not yet implemented")
+        val serie = serieRepository.findById(id);
+
+        if(serie.isPresent){
+            return serie.get();
+        }
+
+        throw Exception("Série não encontrada")
     }
 
     override fun delete(id: Long) {
