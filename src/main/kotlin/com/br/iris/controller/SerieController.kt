@@ -27,6 +27,12 @@ class SerieController(private val service: SerieService) {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     fun getSerieById(@PathVariable id:Long): HttpResponse<Serie>{
-        return HttpResponse.ok(HttpStatus.CREATED).body(this.service.getById(id))
+        return HttpResponse.ok(HttpStatus.OK).body(this.service.getById(id))
     }
+
+    @Delete("/{id}")
+    fun deleteSerie(@PathVariable id:Long) {;
+         service.delete(id)
+    }
+
 }
