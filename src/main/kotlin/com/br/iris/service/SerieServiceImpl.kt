@@ -11,6 +11,10 @@ class SerieServiceImpl @Inject constructor(private var serieRepository: SerieRep
        return serieRepository.save(series)
     }
 
+    override fun getAll(): List<Serie> {
+        return serieRepository.findAll();
+    }
+
     override fun getById(id: Long): Serie? {
         TODO("Not yet implemented")
     }
@@ -20,10 +24,6 @@ class SerieServiceImpl @Inject constructor(private var serieRepository: SerieRep
     }
 
     override fun update(id: Long): Serie {
-        TODO("Not yet implemented")
-    }
-
-    override fun getAll(): List<Serie> {
         TODO("Not yet implemented")
     }
 
