@@ -2,10 +2,11 @@ package com.br.iris.service
 
 import com.br.iris.entity.Serie
 import com.br.iris.repository.SerieRepository
+import java.util.*
 import javax.inject.Inject
 import kotlin.Exception
 
-class SerieServiceImpl @Inject constructor(private var serieRepository: SerieRepository)
+class SerieServiceImpl(@Inject private var serieRepository: SerieRepository)
     : SerieService {
 
     override fun create(series: Serie): Serie {
@@ -13,14 +14,14 @@ class SerieServiceImpl @Inject constructor(private var serieRepository: SerieRep
     }
 
     override fun getAll(): List<Serie> {
-        return serieRepository.findAll();
+        return serieRepository.findAll()
     }
 
-    override fun getById(id: Long): Serie? {
-        val serie = serieRepository.findById(id);
+    override fun getById(id: Long): Serie {
+        val serie = serieRepository.findById(id)
 
         if(serie.isPresent){
-            return serie.get();
+            return serie.get()
         }
 
         throw Exception("Série não encontrada")
@@ -34,7 +35,21 @@ class SerieServiceImpl @Inject constructor(private var serieRepository: SerieRep
         }
     }
 
-    override fun update(id: Long, serie: Serie): Serie {
-        TODO("Not yet implemented")
-    }
+   override fun update(id: Long, serie: Serie): Serie {
+       val serieInBD: Optional<Serie> = serieRepository.findById(id)
+
+       if (serieInBD.isPresent) {
+           val serieToUpdate = serieInBD.get()
+           serieToUpdate.name = serie.name
+           serieToUpdate.description = serie.description
+           serieToUpdate.genre = serie.genre
+           serieToUpdate.whereToWatch = serie.whereToWatch
+
+           return serieRepository.update(serieToUpdate)
+
+       } else {
+           throw Exception("Série não encontrada")
+       }
+   }
+
 }

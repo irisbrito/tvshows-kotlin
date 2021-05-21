@@ -8,13 +8,13 @@ data class Serie(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long?,
         @Column
-        val name: String,
+        var name: String,
         @Column
-        val description: String,
+        var description: String,
         @Column
-        val genre: String,
+        var genre: String,
         @Column
-        val whereToWatch: String,
+        var whereToWatch: String,
 ) {
     constructor(): this(null,"","","", "")
 }
