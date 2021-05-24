@@ -34,5 +34,12 @@ class SerieControllerTest : AnnotationSpec() {
         result shouldBe serie
     }
 
+    @Test
+    fun `should delete serie`(){
+        every {service.delete(any())} answers {Unit}
+        val result = serieController.deleteSerie(1L)
+        result shouldBe Unit
+    }
+
 }
 
