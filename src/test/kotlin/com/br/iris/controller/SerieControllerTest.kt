@@ -41,5 +41,12 @@ class SerieControllerTest : AnnotationSpec() {
         result shouldBe Unit
     }
 
+    @Test
+    fun `should update serie`(){
+        every {service.update(any(), any())} answers {serie}
+        val result = serieController.updateSerie(1L, serie).body()
+        result shouldBe serie
+    }
+
 }
 
