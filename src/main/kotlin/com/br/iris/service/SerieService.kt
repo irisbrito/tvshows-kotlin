@@ -1,7 +1,6 @@
 package com.br.iris.service
 
 import com.br.iris.entity.Serie
-import io.micronaut.data.annotation.Query
 import javax.inject.Singleton
 
 @Singleton
