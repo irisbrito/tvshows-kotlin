@@ -17,13 +17,20 @@ class SerieControllerTest : AnnotationSpec() {
 
     @BeforeEach
     fun setUp(){
-        serie = Serie(1L, "name", "description","genre", "netflix")
+        serie = Serie(1L, "The 100", "Série pós apocaliptica","Ficção-Cientifica", "Netflix")
     }
 
     @Test
     fun `should create serie`(){
         every {service.create(any()) } answers {serie}
         val result = serieController.addSerie(serie).body()
+        result shouldBe serie
+    }
+
+    @Test
+    fun `should get serie by id`(){
+        every {service.getById(any())} answers {serie}
+        val result = serieController.getSerieById(1L).body()
         result shouldBe serie
     }
 
