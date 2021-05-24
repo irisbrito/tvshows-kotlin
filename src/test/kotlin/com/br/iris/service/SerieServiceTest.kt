@@ -20,4 +20,10 @@ class SerieServiceTest : AnnotationSpec() {
         serie = Serie(1L, "The 100", "Série pós apocaliptica","Ficção-Cientifica", "Netflix")
     }
 
+    @Test
+    fun `should save serie`(){
+        every {repository.save(any()) } answers {serie}
+        val result = serieService.create(serie)
+        result shouldBe serie
+    }
 }
