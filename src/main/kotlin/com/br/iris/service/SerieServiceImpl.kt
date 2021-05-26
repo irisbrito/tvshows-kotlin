@@ -6,7 +6,7 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.Exception
 
-class SerieServiceImpl(@Inject private var serieRepository: SerieRepository)
+class SerieServiceImpl(private var serieRepository: SerieRepository)
     : SerieService {
 
     override fun create(series: Serie): Serie {
