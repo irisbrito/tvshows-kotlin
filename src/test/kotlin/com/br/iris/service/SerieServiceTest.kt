@@ -34,4 +34,12 @@ class SerieServiceTest : AnnotationSpec() {
         val result = serieService.getById(1L)
         result shouldBe serie
     }
+
+    @Test
+    fun `should delete serie`(){
+        every { repository.existsById(any()) } answers  {true}
+        every { repository.deleteById(any()) } answers  {Unit}
+        val result = serieService.delete(1L)
+        result shouldBe Unit
+    }
 }

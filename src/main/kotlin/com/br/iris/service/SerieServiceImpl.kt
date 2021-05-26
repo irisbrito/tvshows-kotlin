@@ -3,7 +3,6 @@ package com.br.iris.service
 import com.br.iris.entity.Serie
 import com.br.iris.repository.SerieRepository
 import java.util.*
-import javax.inject.Inject
 import kotlin.Exception
 
 class SerieServiceImpl(private var serieRepository: SerieRepository)
