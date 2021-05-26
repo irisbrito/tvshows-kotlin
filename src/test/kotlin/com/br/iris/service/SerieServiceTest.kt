@@ -7,6 +7,7 @@ import io.kotest.matchers.shouldBe
 import io.micronaut.test.extensions.kotest.annotation.MicronautTest
 import io.mockk.every
 import io.mockk.mockk
+import java.util.*
 
 @MicronautTest
 class SerieServiceTest : AnnotationSpec() {
@@ -24,6 +25,13 @@ class SerieServiceTest : AnnotationSpec() {
     fun `should save serie`(){
         every {repository.save(any()) } answers {serie}
         val result = serieService.create(serie)
+        result shouldBe serie
+    }
+
+    @Test
+    fun `should get serie by id`(){
+        every {repository.findById(any())} answers {Optional.of(serie)}
+        val result = serieService.getById(1L)
         result shouldBe serie
     }
 }
