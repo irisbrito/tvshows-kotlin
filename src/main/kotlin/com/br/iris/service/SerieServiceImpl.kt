@@ -3,9 +3,11 @@ package com.br.iris.service
 import com.br.iris.entity.Serie
 import com.br.iris.repository.SerieRepository
 import java.util.*
+import javax.inject.Singleton
 import kotlin.Exception
 
-class SerieServiceImpl(private var serieRepository: SerieRepository)
+@Singleton
+class SerieServiceImpl(private val serieRepository: SerieRepository)
     : SerieService {
 
     override fun create(series: Serie): Serie {
