@@ -14,7 +14,7 @@ class SerieServiceImpl(private val cqlSession: CqlSession)
         cqlSession.execute(
             SimpleStatement
                 .newInstance(
-                    "INSERT INTO tv-shows.Serie(id,name,description,genre,where_to_watch) VALUES (?,?,?,?,?)",
+                    "INSERT INTO tv-shows.Series(id,name,description,genre,where_to_watch) VALUES (?,?,?,?,?)",
                     UUID.randomUUID(),
                     serie.name,
                     serie.description,
@@ -26,10 +26,15 @@ class SerieServiceImpl(private val cqlSession: CqlSession)
     }
 
     /*override fun getAll(): List<Serie> {
-        return serieRepository.findAll()
-    }
+        cqlSession.execute(
+            SimpleStatement
+                .newInstance(
+                    "SELECT * FROM tv-shows.Series",
+                )
+        )
+    }*/
 
-    override fun getById(id: Long): Serie {
+   /* override fun getById(id: Long): Serie {
         val serie = serieRepository.findById(id)
 
         if(serie.isPresent){
@@ -37,17 +42,18 @@ class SerieServiceImpl(private val cqlSession: CqlSession)
         }
 
         throw Exception("Série não encontrada")
-    }
+    }*/
 
     override fun delete(id: Long) {
-        if(serieRepository.existsById(id)){
-            serieRepository.deleteById(id)
-        } else {
-            throw Exception("Série não encontrada")
-        }
+        cqlSession.execute(
+            SimpleStatement
+                .newInstance(
+                    "DELETE FROM tv-shows.Series WHERE id = ?",
+                )
+        )
     }
 
-   override fun update(id: Long, serie: Serie): Serie {
+   /*override fun update(id: Long, serie: Serie): Serie {
        val serieInBD: Optional<Serie> = serieRepository.findById(id)
 
        if (serieInBD.isPresent) {
