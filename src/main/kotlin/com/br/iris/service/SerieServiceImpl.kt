@@ -1,20 +1,31 @@
 package com.br.iris.service
 
 import com.br.iris.entity.Serie
-import com.br.iris.repository.SerieRepository
+import com.datastax.oss.driver.api.core.CqlSession
+import com.datastax.oss.driver.api.core.cql.SimpleStatement
 import java.util.*
 import javax.inject.Singleton
-import kotlin.Exception
 
 @Singleton
-class SerieServiceImpl(private val serieRepository: SerieRepository)
+class SerieServiceImpl(private val cqlSession: CqlSession)
     : SerieService {
 
-    override fun create(series: Serie): Serie {
-       return serieRepository.save(series)
+    override fun create(serie: Serie): Serie {
+        cqlSession.execute(
+            SimpleStatement
+                .newInstance(
+                    "INSERT INTO tv-shows.Serie(id,name,description,genre,where_to_watch) VALUES (?,?,?,?,?)",
+                    UUID.randomUUID(),
+                    serie.name,
+                    serie.description,
+                    serie.genre,
+                    serie.whereToWatch
+                )
+        )
+        return serie;
     }
 
-    override fun getAll(): List<Serie> {
+    /*override fun getAll(): List<Serie> {
         return serieRepository.findAll()
     }
 
@@ -51,6 +62,6 @@ class SerieServiceImpl(private val serieRepository: SerieRepository)
        } else {
            throw Exception("Série não encontrada")
        }
-   }
+   }*/
 
 }

@@ -1,7 +1,6 @@
 package com.br.iris.service
 
 import com.br.iris.entity.Serie
-import com.br.iris.repository.SerieRepository
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.micronaut.test.extensions.kotest.annotation.MicronautTest

@@ -5,7 +5,7 @@ import javax.inject.Singleton
 
 @Singleton
 interface SerieService {
-    fun create(series: Serie): Serie
+    fun create(serie: Serie): Serie
     fun getAll(): List<Serie>
     fun getById(id: Long): Serie?
     fun delete(id: Long)
