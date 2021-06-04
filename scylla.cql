@@ -1,8 +1,8 @@
-CREATE KEYSPACE tv-shows
+CREATE KEYSPACE tv_shows
 WITH replication = {'class' : 'SimpleStrategy', 'replication_factor' : 3}
 AND durable_writes = true;
 
-use tv-shows;
+use tv_shows;
 
 CREATE TABLE series(
     id uuid,

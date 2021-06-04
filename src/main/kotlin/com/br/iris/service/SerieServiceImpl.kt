@@ -3,6 +3,8 @@ package com.br.iris.service
 import com.br.iris.entity.Serie
 import com.datastax.oss.driver.api.core.CqlSession
 import com.datastax.oss.driver.api.core.cql.SimpleStatement
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.util.*
 import javax.inject.Singleton
 
@@ -10,11 +12,13 @@ import javax.inject.Singleton
 class SerieServiceImpl(private val cqlSession: CqlSession)
     : SerieService {
 
+    private val LOG : Logger = LoggerFactory.getLogger(SerieService::class.java)
+
     override fun create(serie: Serie): Serie {
         cqlSession.execute(
             SimpleStatement
                 .newInstance(
-                    "INSERT INTO tv-shows.Series(id,name,description,genre,where_to_watch) VALUES (?,?,?,?,?)",
+                    "INSERT INTO tv_shows.Series(id,name,description,genre,where_to_watch) VALUES (?,?,?,?,?)",
                     UUID.randomUUID(),
                     serie.name,
                     serie.description,
@@ -22,52 +26,36 @@ class SerieServiceImpl(private val cqlSession: CqlSession)
                     serie.whereToWatch
                 )
         )
-        return serie;
+        LOG.info("serie saved successfully {}")
+        return serie
     }
-
-    /*override fun getAll(): List<Serie> {
-        cqlSession.execute(
-            SimpleStatement
-                .newInstance(
-                    "SELECT * FROM tv-shows.Series",
-                )
-        )
-    }*/
-
-   /* override fun getById(id: Long): Serie {
-        val serie = serieRepository.findById(id)
-
-        if(serie.isPresent){
-            return serie.get()
-        }
-
-        throw Exception("Série não encontrada")
-    }*/
 
     override fun delete(id: Long) {
         cqlSession.execute(
             SimpleStatement
                 .newInstance(
-                    "DELETE FROM tv-shows.Series WHERE id = ?",
+                    "DELETE FROM tv_shows.Series WHERE id = ?",
+                    id
                 )
         )
+        LOG.info("serie deleted successfully {}")
     }
 
-   /*override fun update(id: Long, serie: Serie): Serie {
-       val serieInBD: Optional<Serie> = serieRepository.findById(id)
+    override fun update(id: Long, serie: Serie): Serie {
+        cqlSession.execute(
+            SimpleStatement
+                .newInstance(
+                    "UPDATE from tv_shows.Series SET name = ?, description = ?, genre = ?, where_to_watch = ? WHERE id = ?",
+                    serie.id,
+                    serie.name,
+                    serie.description,
+                    serie.genre,
+                    serie.whereToWatch
+                )
+        )
+        LOG.info("serie updated successfully {}")
+        return serie
 
-       if (serieInBD.isPresent) {
-           val serieToUpdate = serieInBD.get()
-           serieToUpdate.name = serie.name
-           serieToUpdate.description = serie.description
-           serieToUpdate.genre = serie.genre
-           serieToUpdate.whereToWatch = serie.whereToWatch
-
-           return serieRepository.update(serieToUpdate)
-
-       } else {
-           throw Exception("Série não encontrada")
-       }
-   }*/
+    }
 
 }
