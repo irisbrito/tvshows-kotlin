@@ -47,6 +47,23 @@ class SerieServiceImpl(private val cqlSession: CqlSession)
 
     }
 
+    override fun getById(id: Long): Serie {
+       val queryResult = cqlSession.execute(
+            SimpleStatement
+                .newInstance("SELECT * FROM tv_shows.Series WHERE id= ?",
+                    id,
+                    )
+        )
+
+       return queryResult.map { serie -> Serie(
+            serie.getUuid("id")!!,
+            serie.getString("name") ?: "no name",
+            serie.getString("description") ?: "no description",
+            serie.getString("genre") ?: "no genre",
+            serie.getString("where_to_watch") ?: "no local indicated to watch",
+        ) }.single()
+    }
+
     override fun delete(id: Long) {
         cqlSession.execute(
             SimpleStatement
