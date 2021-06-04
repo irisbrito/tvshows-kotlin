@@ -30,6 +30,23 @@ class SerieServiceImpl(private val cqlSession: CqlSession)
         return serie
     }
 
+    override fun getAll(): List<Serie> {
+      val queryResult =  cqlSession.execute(
+            SimpleStatement
+                .newInstance(
+                    "SELECT * FROM tv_shows.Series",
+                )
+        )
+        return queryResult.map { serie -> Serie(
+            serie.getUuid("id") ,
+            serie.getString("name") ?: "no name",
+            serie.getString("description") ?: "no description",
+            serie.getString("genre") ?: "no genre",
+            serie.getString("where_to_watch") ?: "no local indicated to watch",
+        ) }.toList()
+
+    }
+
     override fun delete(id: Long) {
         cqlSession.execute(
             SimpleStatement
