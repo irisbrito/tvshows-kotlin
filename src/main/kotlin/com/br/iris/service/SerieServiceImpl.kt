@@ -1,10 +1,12 @@
 package com.br.iris.service
 
 import com.br.iris.entity.Serie
+import com.br.iris.exception.SerieNotFoundException
 import com.datastax.oss.driver.api.core.CqlSession
 import com.datastax.oss.driver.api.core.cql.SimpleStatement
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.lang.RuntimeException
 import java.util.*
 import javax.inject.Singleton
 
@@ -48,48 +50,63 @@ class SerieServiceImpl(private val cqlSession: CqlSession)
     }
 
     override fun getById(id: Long): Serie {
-       val queryResult = cqlSession.execute(
-            SimpleStatement
-                .newInstance("SELECT * FROM tv_shows.Series WHERE id= ?",
-                    id,
+        try {
+            val queryResult = cqlSession.execute(
+                SimpleStatement
+                    .newInstance("SELECT * FROM tv_shows.Series WHERE id= ?",
+                        id,
                     )
-        )
+            )
 
-       return queryResult.map { serie -> Serie(
-            serie.getUuid("id")!!,
-            serie.getString("name") ?: "no name",
-            serie.getString("description") ?: "no description",
-            serie.getString("genre") ?: "no genre",
-            serie.getString("where_to_watch") ?: "no local indicated to watch",
-        ) }.single()
+            return queryResult.map { serie -> Serie(
+                serie.getUuid("id")!!,
+                serie.getString("name") ?: "no name",
+                serie.getString("description") ?: "no description",
+                serie.getString("genre") ?: "no genre",
+                serie.getString("where_to_watch") ?: "no local indicated to watch",
+            ) }.single()
+
+        } catch (e: RuntimeException){
+            throw SerieNotFoundException()
+        }
+
     }
 
     override fun delete(id: Long) {
-        cqlSession.execute(
-            SimpleStatement
-                .newInstance(
-                    "DELETE FROM tv_shows.Series WHERE id = ?",
-                    id
-                )
-        )
-        LOG.info("serie deleted successfully {}")
+       try {
+           cqlSession.execute(
+               SimpleStatement
+                   .newInstance(
+                       "DELETE FROM tv_shows.Series WHERE id = ?",
+                       id
+                   )
+           )
+           LOG.info("serie deleted successfully {}")
+
+       } catch (e: RuntimeException){
+           throw SerieNotFoundException()
+       }
     }
 
     override fun update(id: Long, serie: Serie): Serie {
-        cqlSession.execute(
-            SimpleStatement
-                .newInstance(
-                    "UPDATE from tv_shows.Series SET name = ?, description = ?, genre = ?, where_to_watch = ? WHERE id = ?",
-                    serie.id,
-                    serie.name,
-                    serie.description,
-                    serie.genre,
-                    serie.whereToWatch
-                )
-        )
-        LOG.info("serie updated successfully {}")
-        return serie
+        try {
+            cqlSession.execute(
+                SimpleStatement
+                    .newInstance(
+                        "UPDATE from tv_shows.Series SET name = ?, description = ?, genre = ?, where_to_watch = ? WHERE id = ?",
+                        serie.id,
+                        serie.name,
+                        serie.description,
+                        serie.genre,
+                        serie.whereToWatch
+                    )
+            )
+            LOG.info("serie updated successfully {}")
+            return serie
 
+        } catch (e: RuntimeException) {
+            throw SerieNotFoundException()
+        }
     }
 
 }
