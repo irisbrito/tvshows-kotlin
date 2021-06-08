@@ -15,8 +15,8 @@ class ExceptionHandler : ExceptionHandler<SerieNotFoundException?, HttpResponse<
 
     override fun handle(request: HttpRequest<*>?, exception: SerieNotFoundException?): HttpResponse<*> {
         val errorMessage = ErrorMessage(
-            HttpStatus.BAD_REQUEST.toString(),400
-            ,"invalid arguments")
+            HttpStatus.BAD_REQUEST.toString(),
+            400,"invalid arguments")
 
         return HttpResponse.badRequest(errorMessage)
     }
