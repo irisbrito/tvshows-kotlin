@@ -11,9 +11,9 @@ import java.util.*
 import javax.inject.Singleton
 
 @Singleton
-class SerieRepositoryImpl(private val cqlSession: CqlSession) : SerieService {
+class SerieRepositoryImpl(private val cqlSession: CqlSession) : SerieRepository {
 
-    private val LOG: Logger = LoggerFactory.getLogger(SerieService::class.java)
+    private val LOG: Logger = LoggerFactory.getLogger(SerieRepository::class.java)
 
     override fun create(serie: Serie): Serie {
         cqlSession.execute(
