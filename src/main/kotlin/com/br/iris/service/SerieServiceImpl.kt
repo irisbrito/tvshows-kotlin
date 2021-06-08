@@ -25,7 +25,7 @@ class SerieServiceImpl(private val serieRepository: SerieRepository) : SerieServ
     }
 
     override fun update(id: UUID, serie: Serie): Serie {
-        TODO("Not yet implemented")
+        return serieRepository.update(id, serie)
     }
 
 }
