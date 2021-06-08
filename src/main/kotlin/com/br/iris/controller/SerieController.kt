@@ -1,7 +1,6 @@
 package com.br.iris.controller
 
 import com.br.iris.entity.Serie
-import com.br.iris.repository.SerieRepository
 import com.br.iris.service.SerieService
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
@@ -32,7 +31,7 @@ class SerieController(private val serieService: SerieService) {
         return HttpResponse.ok(HttpStatus.OK).body(this.serieService.getById(id))
     }
 
-    @Put("update/{id}")
+    @Put("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     fun updateSerie(@PathVariable id:UUID, @Body serie: Serie): HttpResponse<Serie>{
