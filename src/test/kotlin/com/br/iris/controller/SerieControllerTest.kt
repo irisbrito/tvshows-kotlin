@@ -7,6 +7,7 @@ import io.kotest.matchers.shouldBe
 import io.micronaut.test.extensions.kotest.annotation.MicronautTest
 import io.mockk.mockk
 import io.mockk.every
+import java.util.*
 /*
 @MicronautTest
 class SerieControllerTest : AnnotationSpec() {
@@ -17,7 +18,7 @@ class SerieControllerTest : AnnotationSpec() {
 
     @BeforeEach
     fun setUp(){
-        serie = Serie(1L, "The 100", "Série pós apocaliptica","Ficção-Cientifica", "Netflix")
+        serie = Serie(UUID.fromString("3a5fd8cc-96a5-4603-8de9-3a333fa28338"), "The 100", "Série pós apocaliptica","Ficção-Cientifica", "Netflix")
     }
 
     @Test
@@ -30,14 +31,14 @@ class SerieControllerTest : AnnotationSpec() {
     @Test
     fun `should get serie by id`(){
         every {service.getById(any())} answers {serie}
-        val result = serieController.getSerieById(1L).body()
+        val result = serieController.getSerieById().body()
         result shouldBe serie
     }
 
     @Test
     fun `should delete serie`(){
         every {service.delete(any())} answers {Unit}
-        val result = serieController.deleteSerie(1L)
+        val result = serieController.deleteSerie("3a5fd8cc-96a5-4603-8de9-3a333fa28338")
         result shouldBe Unit
     }
 
