@@ -1,13 +1,13 @@
 package com.br.iris.entity
 
+import io.micronaut.core.annotation.Introspected
 import java.util.*
 
+@Introspected
 data class Serie(
-        val id: UUID?,
-        var name: String,
-        var description: String,
-        var genre: String,
-        var whereToWatch: String,
-) {
-    constructor(): this(null,"","","", "")
-}
+        val id: UUID? = null,
+        var name: String = "",
+        var description: String = "",
+        var genre: String = "",
+        var whereToWatch: String = "",
+)
