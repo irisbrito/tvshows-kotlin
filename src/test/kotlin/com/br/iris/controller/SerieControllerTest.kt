@@ -8,17 +8,19 @@ import io.micronaut.test.extensions.kotest.annotation.MicronautTest
 import io.mockk.mockk
 import io.mockk.every
 import java.util.*
-/*
+
 @MicronautTest
 class SerieControllerTest : AnnotationSpec() {
 
     val service = mockk<SerieService>()
     val serieController = SerieController(service)
     lateinit var serie : Serie
+    val id : UUID = UUID.fromString("3a5fd8cc-96a5-4603-8de9-3a333fa28338")
+
 
     @BeforeEach
     fun setUp(){
-        serie = Serie(UUID.fromString("3a5fd8cc-96a5-4603-8de9-3a333fa28338"), "The 100", "Série pós apocaliptica","Ficção-Cientifica", "Netflix")
+        serie = Serie(id, "The 100", "Série pós apocaliptica","Ficção-Cientifica", "Netflix")
     }
 
     @Test
@@ -31,21 +33,21 @@ class SerieControllerTest : AnnotationSpec() {
     @Test
     fun `should get serie by id`(){
         every {service.getById(any())} answers {serie}
-        val result = serieController.getSerieById().body()
+        val result = serieController.getSerieById(id).body()
         result shouldBe serie
     }
 
     @Test
     fun `should delete serie`(){
         every {service.delete(any())} answers {Unit}
-        val result = serieController.deleteSerie("3a5fd8cc-96a5-4603-8de9-3a333fa28338")
+        val result = serieController.deleteSerie(id)
         result shouldBe Unit
     }
 
     @Test
     fun `should update serie`(){
         every {service.update(any(), any())} answers {serie}
-        val result = serieController.updateSerie(1L, serie).body()
+        val result = serieController.updateSerie(id, serie).body()
         result shouldBe serie
     }
 
@@ -56,4 +58,4 @@ class SerieControllerTest : AnnotationSpec() {
         result shouldBe listOf(serie)
     }
 }
-*/
+
