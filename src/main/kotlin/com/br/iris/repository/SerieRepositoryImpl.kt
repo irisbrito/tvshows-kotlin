@@ -2,7 +2,6 @@ package com.br.iris.repository
 
 import com.br.iris.entity.Serie
 import com.br.iris.exception.SerieNotFoundException
-import com.br.iris.service.SerieService
 import com.datastax.oss.driver.api.core.CqlSession
 import com.datastax.oss.driver.api.core.cql.SimpleStatement
 import org.slf4j.Logger
@@ -62,10 +61,10 @@ class SerieRepositoryImpl(private val cqlSession: CqlSession) : SerieRepository 
             return queryResult.map { serie ->
                 Serie(
                     serie.getUuid("id")!!,
-                    serie.getString("name") ?: "no name",
-                    serie.getString("description") ?: "no description",
-                    serie.getString("genre") ?: "no genre",
-                    serie.getString("where_to_watch") ?: "no local indicated to watch"
+                    serie.getString("name")!!,
+                    serie.getString("description")!!,
+                    serie.getString("genre")!!,
+                    serie.getString("where_to_watch")!!
                 )
             }.single()
 
@@ -96,7 +95,7 @@ class SerieRepositoryImpl(private val cqlSession: CqlSession) : SerieRepository 
             cqlSession.execute(
                 SimpleStatement
                     .newInstance(
-                        "UPDATE from tv_shows.Series SET name = ?, description = ?, genre = ?, where_to_watch = ? WHERE id = ?",
+                        "UPDATE tv_shows.Series SET name = ?, description = ?, genre = ?, where_to_watch = ? WHERE id = ?",
                         serie.name,
                         serie.description,
                         serie.genre,
@@ -104,7 +103,8 @@ class SerieRepositoryImpl(private val cqlSession: CqlSession) : SerieRepository 
                         serie.id
                     )
             )
-            LOG.info("serie updated successfully {}")
+
+            LOG.info("serie updated successfully {$serie}")
             return serie
 
         } catch (e: RuntimeException) {
