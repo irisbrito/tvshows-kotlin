@@ -15,10 +15,11 @@ class SerieServiceTest : AnnotationSpec() {
     val repository = mockk<SerieRepository>(relaxed = true)
     val serieService = SerieServiceImpl(repository)
     lateinit var serie : Serie
+    val id : String = "3a5fd8cc-96a5-4603-8de9-3a333fa28338"
 
     @BeforeEach
     fun setUp(){
-        serie = Serie(UUID.fromString("3a5fd8cc-96a5-4603-8de9-3a333fa28338"), "The 100", "Série pós apocaliptica","Ficção-Cientifica", "Netflix")
+        serie = Serie(UUID.fromString(id), "The 100", "Série pós apocaliptica","Ficção-Cientifica", "Netflix")
     }
 
     @Test
@@ -27,13 +28,13 @@ class SerieServiceTest : AnnotationSpec() {
         val result = serieService.create(serie)
         result shouldBe serie
     }
-/*
+
     @Test
     fun `should get serie by id`(){
-        every {repository.findById(any())} answers {Optional.of(serie)}
-        val result = serieService.getById(1L)
+        every {repository.getById(any())} answers {serie}
+        val result = serieService.getById(UUID.fromString(id))
         result shouldBe serie
-    }*/
+    }
 
    /* @Test
     fun `should delete serie`(){
