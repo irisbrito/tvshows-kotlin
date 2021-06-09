@@ -36,11 +36,10 @@ class SerieServiceTest : AnnotationSpec() {
         result shouldBe serie
     }
 
-   /* @Test
+   @Test
     fun `should delete serie`(){
-        every { repository.existsById(any()) } answers  {true}
-        every { repository.deleteById(any()) } answers  {Unit}
-        val result = serieService.delete(1L)
+        every { repository.delete(any()) } answers  {Unit}
+        val result = serieService.delete(UUID.fromString(id))
         result shouldBe Unit
-    }*/
+    }
 }
