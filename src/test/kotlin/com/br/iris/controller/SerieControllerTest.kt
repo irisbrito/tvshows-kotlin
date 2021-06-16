@@ -1,5 +1,5 @@
 package com.br.iris.controller
-
+/*
 import com.br.iris.entity.Serie
 import com.br.iris.service.SerieService
 import io.kotest.core.spec.style.AnnotationSpec
@@ -59,3 +59,4 @@ class SerieControllerTest : AnnotationSpec() {
     }
 }
 
+*/
