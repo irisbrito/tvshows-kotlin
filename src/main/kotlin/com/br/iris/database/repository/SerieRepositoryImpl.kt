@@ -1,6 +1,7 @@
 package com.br.iris.repository
 
-import com.br.iris.entity.Serie
+import com.br.iris.core.port.SerieRepository
+import com.br.iris.core.model.Serie
 import com.br.iris.exception.SerieNotFoundException
 import com.datastax.oss.driver.api.core.CqlSession
 import com.datastax.oss.driver.api.core.cql.SimpleStatement

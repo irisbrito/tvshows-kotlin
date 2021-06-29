@@ -1,6 +1,6 @@
 package com.br.iris.util
 
-import com.br.iris.entity.Serie
+import com.br.iris.core.model.Serie
 
 class SerieUtil {
     companion object{
