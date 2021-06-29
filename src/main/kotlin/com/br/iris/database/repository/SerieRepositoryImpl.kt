@@ -1,8 +1,10 @@
-package com.br.iris.repository
+package com.br.iris.database.repository
 
+import com.br.iris.core.mapper.SerieConverter
 import com.br.iris.core.port.SerieRepository
 import com.br.iris.core.model.Serie
-import com.br.iris.exception.SerieNotFoundException
+import com.br.iris.database.entity.SerieEntity
+import com.br.iris.database.exception.SerieNotFoundException
 import com.datastax.oss.driver.api.core.CqlSession
 import com.datastax.oss.driver.api.core.cql.SimpleStatement
 import org.slf4j.Logger
@@ -15,7 +17,7 @@ class SerieRepositoryImpl(private val cqlSession: CqlSession) : SerieRepository 
 
     private val LOG: Logger = LoggerFactory.getLogger(SerieRepository::class.java)
 
-    override fun create(serie: Serie): Serie {
+    override fun create(serie: Serie): SerieEntity {
         cqlSession.execute(
             SimpleStatement
                 .newInstance(
@@ -28,7 +30,7 @@ class SerieRepositoryImpl(private val cqlSession: CqlSession) : SerieRepository 
                 )
         )
         LOG.info("serie saved successfully {}")
-        return serie
+        return SerieConverter.serieToSerieEntity(serie)
     }
 
     override fun getAll(): List<Serie> {
@@ -91,7 +93,7 @@ class SerieRepositoryImpl(private val cqlSession: CqlSession) : SerieRepository 
         }
     }
 
-    override fun update(id: UUID, serie: Serie): Serie {
+    override fun update(id: UUID, serie: Serie): SerieEntity {
         try {
             cqlSession.execute(
                 SimpleStatement
@@ -106,7 +108,7 @@ class SerieRepositoryImpl(private val cqlSession: CqlSession) : SerieRepository 
             )
 
             LOG.info("serie updated successfully {$serie}")
-            return serie
+            return SerieConverter.serieToSerieEntity(serie)
 
         } catch (e: RuntimeException) {
             throw SerieNotFoundException()

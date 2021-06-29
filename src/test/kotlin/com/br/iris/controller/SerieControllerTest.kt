@@ -1,7 +1,7 @@
 package com.br.iris.controller
 /*
-import com.br.iris.entity.Serie
-import com.br.iris.service.SerieService
+import com.br.iris.core.model.Serie
+import com.br.iris.core.port.SerieService
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.micronaut.test.extensions.kotest.annotation.MicronautTest

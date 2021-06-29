@@ -1,5 +1,6 @@
-package com.br.iris.service
+package com.br.iris.core.service
 
+import com.br.iris.core.mapper.SerieConverter
 import com.br.iris.core.model.Serie
 import com.br.iris.core.port.SerieRepository
 import com.br.iris.core.port.SerieService
@@ -9,24 +10,16 @@ import javax.inject.Singleton
 @Singleton
 class SerieServiceImpl(private val serieRepository: SerieRepository) : SerieService {
 
-    override fun create(serie: Serie): Serie {
-       return serieRepository.create(serie)
-    }
+    override fun create(serie: Serie): Serie =
+      SerieConverter.serieEntityToSerie(serieRepository.create(serie))
 
-    override fun getAll(): List<Serie> {
-        return serieRepository.getAll()
-    }
+    override fun getAll(): List<Serie> = serieRepository.getAll()
 
-    override fun getById(id: UUID): Serie? {
-       return serieRepository.getById(id)
-    }
+    override fun getById(id: UUID): Serie? = serieRepository.getById(id)
 
-    override fun delete(id: UUID) {
-        return serieRepository.delete(id)
-    }
+    override fun delete(id: UUID) = serieRepository.delete(id)
 
-    override fun update(id: UUID, serie: Serie): Serie {
-        return serieRepository.update(id, serie)
-    }
+    override fun update(id: UUID, serie: Serie): Serie =
+      SerieConverter.serieEntityToSerie(serieRepository.update(id, serie))
 
 }

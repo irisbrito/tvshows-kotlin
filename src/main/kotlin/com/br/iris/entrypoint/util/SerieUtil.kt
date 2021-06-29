@@ -1,4 +1,4 @@
-package com.br.iris.util
+package com.br.iris.entrypoint.util
 
 import com.br.iris.core.model.Serie
 

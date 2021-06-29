@@ -1,6 +1,6 @@
-package com.br.iris.service
+package com.br.iris.core.port
 
-import com.br.iris.entity.Serie
+import com.br.iris.core.model.Serie
 import java.util.*
 import javax.inject.Singleton
 

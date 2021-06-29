@@ -1,7 +1,7 @@
 package com.br.iris.broker
 
-import com.br.iris.entity.Serie
-import com.br.iris.service.SerieServiceImpl
+import com.br.iris.core.model.Serie
+import com.br.iris.core.service.SerieServiceImpl
 import io.micronaut.nats.annotation.NatsListener
 import io.micronaut.nats.annotation.Subject
 import org.slf4j.LoggerFactory

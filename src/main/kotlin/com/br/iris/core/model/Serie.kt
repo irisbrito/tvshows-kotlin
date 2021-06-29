@@ -1,9 +1,7 @@
-package com.br.iris.entity
+package com.br.iris.core.model
 
-import io.micronaut.core.annotation.Introspected
 import java.util.*
 
-@Introspected
 data class Serie(
         val id: UUID? = null,
         var name: String = "",

@@ -1,4 +1,4 @@
-package com.br.iris.exception
+package com.br.iris.database.exception
 
 data class ErrorMessage (
     val error: String = "",
