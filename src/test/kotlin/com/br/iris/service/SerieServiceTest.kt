@@ -1,7 +1,7 @@
 package com.br.iris.service
 
 import com.br.iris.core.model.Serie
-import com.br.iris.core.port.SerieRepository
+import com.br.iris.core.port.SerieRepositoryPort
 import com.br.iris.core.service.SerieServiceImpl
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
@@ -13,7 +13,7 @@ import java.util.*
 @MicronautTest
 class SerieServiceTest : AnnotationSpec() {
 
-    val repository = mockk<SerieRepository>(relaxed = true)
+    val repository = mockk<SerieRepositoryPort>(relaxed = true)
     val serieService = SerieServiceImpl(repository)
     lateinit var serie : Serie
     val id : UUID = UUID.fromString("3a5fd8cc-96a5-4603-8de9-3a333fa28338")

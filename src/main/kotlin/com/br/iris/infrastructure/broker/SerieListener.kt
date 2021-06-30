@@ -1,4 +1,4 @@
-package com.br.iris.broker
+package com.br.iris.infrastructure.broker
 
 import com.br.iris.core.model.Serie
 import com.br.iris.core.service.SerieServiceImpl

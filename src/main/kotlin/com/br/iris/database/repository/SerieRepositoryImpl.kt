@@ -1,7 +1,7 @@
 package com.br.iris.database.repository
 
 import com.br.iris.core.mapper.SerieConverter
-import com.br.iris.core.port.SerieRepository
+import com.br.iris.core.port.SerieRepositoryPort
 import com.br.iris.core.model.Serie
 import com.br.iris.database.entity.SerieEntity
 import com.br.iris.database.exception.SerieNotFoundException
@@ -13,9 +13,9 @@ import java.util.*
 import javax.inject.Singleton
 
 @Singleton
-class SerieRepositoryImpl(private val cqlSession: CqlSession) : SerieRepository {
+class SerieRepositoryImpl(private val cqlSession: CqlSession) : SerieRepositoryPort {
 
-    private val LOG: Logger = LoggerFactory.getLogger(SerieRepository::class.java)
+    private val LOG: Logger = LoggerFactory.getLogger(SerieRepositoryPort::class.java)
 
     override fun create(serie: Serie): SerieEntity {
         cqlSession.execute(
