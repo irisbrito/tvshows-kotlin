@@ -52,4 +52,23 @@ class SerieRepositoryTest : AnnotationSpec() {
         val result = serieRepositoryImpl.delete(id)
         result shouldBe Unit
     }
+
+    @Test
+    fun `should update a serie`(){
+        cqlSession.execute(
+                SimpleStatement
+                        .newInstance(
+                                "UPDATE tv_shows.Series SET name = ?, description = ?, genre = ?, where_to_watch = ? WHERE id = ?",
+                                serie.name,
+                                serie.description,
+                                serie.genre,
+                                serie.whereToWatch,
+                                serie.id
+                        )
+        )
+
+        val result = SerieConverter.serieEntityToSerie(serieRepositoryImpl.update(id, serie))
+        result shouldBe serie
+    }
+
 }
