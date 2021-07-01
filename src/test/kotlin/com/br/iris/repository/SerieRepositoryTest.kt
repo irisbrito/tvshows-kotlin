@@ -38,4 +38,18 @@ class SerieRepositoryTest : AnnotationSpec() {
        val result = SerieConverter.serieEntityToSerie(serieRepositoryImpl.create(serie))
         result shouldBe serie
     }
+
+    @Test
+    fun `should delete a serie`(){
+        cqlSession.execute(
+                SimpleStatement
+                        .newInstance(
+                                "DELETE FROM tv_shows.Series WHERE id = ?",
+                                id
+                        )
+        )
+
+        val result = serieRepositoryImpl.delete(id)
+        result shouldBe Unit
+    }
 }
