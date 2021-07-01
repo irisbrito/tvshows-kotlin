@@ -71,4 +71,27 @@ class SerieRepositoryTest : AnnotationSpec() {
         result shouldBe serie
     }
 
+    @Test
+    fun `should get all series`(){
+        val queryResult = cqlSession.execute(
+                SimpleStatement
+                        .newInstance(
+                                "SELECT * FROM tv_shows.Series",
+                        )
+        )
+        val listOfSeries = queryResult.map { serie ->
+            Serie(
+                    serie.getUuid("id")!!,
+                    serie.getString("name")!!,
+                    serie.getString("description")!!,
+                    serie.getString("genre")!!,
+                    serie.getString("where_to_watch")!!
+            )
+        }.toList()
+
+        val result = serieRepositoryImpl.getAll()
+
+        result shouldBe listOfSeries
+    }
+
 }
